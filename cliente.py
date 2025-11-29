@@ -110,13 +110,14 @@ def executar_paralelo(A, B):
         resultados[i] = enviar_para_servidor(host, port, partes[i], B)
         tempos[i] = time.time() - ini
 
-    t0 = time.time()
 
     for i, (host, port) in enumerate(SERVIDORES):
         print(f"[PARALELO] Enviando bloco {i} para {host}:{port}...")
         t = threading.Thread(target=worker, args=(i, host, port))
         t.start()
         threads.append(t)
+        
+    t0 = time.time()
 
     for t in threads:
         t.join()
